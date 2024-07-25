@@ -22,9 +22,9 @@ import whisper_timestamped as whisper
 from utility.script.script_generator import generate_script
 from utility.audio.audio_generator import generate_audio
 from utility.captions.timed_captions_generator import generate_timed_captions
-from utility.video.background_video_generator import generate_video_url
+from utility.video.background_video_generator import generate_video_url, generate_video_urlNoCaptions
 from utility.render.render_engine import get_output_media
-from utility.video.video_search_query_generator import getVideoSearchQueriesTimed, merge_empty_intervals
+from utility.video.video_search_query_generator import getVideoSearchQueriesTimed, merge_empty_intervals, getVideoSearchQueriesNoCaptions
 import argparse
 #-----------------------------------------------------------
 
@@ -53,6 +53,28 @@ except KeyError:
 
 @app.route('/video/<userprompt>')
 def VideoRequest(userprompt):
+    SAMPLE_TOPIC = userprompt
+    VIDEO_SERVER = "pexel"
+
+    #response = generate_script(SAMPLE_TOPIC)
+    #print("script: {}".format(response))
+
+    search_terms = getVideoSearchQueriesNoCaptions(userprompt)
+
+    background_video_urls = None
+    if search_terms is not None:
+        background_video_urls = generate_video_urlNoCaptions(search_terms, VIDEO_SERVER)
+        print(background_video_urls)
+    else:
+        print("No background video")
+
+    urlDictionary = {"urls": background_video_urls}
+    return urlDictionary
+    #background_video_urls = merge_empty_intervals(background_video_urls)
+  
+
+@app.route('/generate/<userprompt>')
+def VideoGenerate(userprompt):
     SAMPLE_TOPIC = userprompt
     SAMPLE_FILE_NAME = "audio_tts.wav"
     VIDEO_SERVER = "pexel"

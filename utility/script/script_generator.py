@@ -48,8 +48,8 @@ def generate_script(topic):
     lastChar = content[-1]
     firstChar = content[0]
 
-    print("result...before")
-    print(content)
+   # print("result...before")
+    #print(content)
 
 
     if(lastChar != "\"}"):
@@ -58,8 +58,8 @@ def generate_script(topic):
     if(firstChar != "{"):
         content = "{" + content
 
-    print("result...after")
-    print(content)
+    #print("result...after")
+    #print(content)
     try:
         script = json.loads(content)["script"]
     except Exception as e:
