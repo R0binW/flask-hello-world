@@ -2,7 +2,7 @@ import os
 import requests
 from utility.utils import log_response,LOG_TYPE_PEXEL
 
-PEXELS_API_KEY = os.environ.get('PEXELS_KEY')
+PEXELS_API_KEY = "dcm7UPZKPIai29lUBP8rGkQSBsa1CDtpdG88Bw7qd8kX2p0kz9vWtnxu"
 
 def search_videos(query_string, orientation_landscape=True):
     url = "https://api.pexels.com/videos/search"
