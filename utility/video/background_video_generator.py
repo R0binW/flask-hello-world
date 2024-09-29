@@ -8,7 +8,7 @@ def search_videos(query_string, orientation_landscape=True):
     url = "https://api.pexels.com/videos/search"
     params = {
         "query": query_string,
-        "per_page": 1,
+        "per_page": 15,
         "orientation": "landscape" if orientation_landscape else "portrait",
     }
     headers = {
