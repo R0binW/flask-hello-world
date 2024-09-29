@@ -12,7 +12,7 @@ def search_videos(query_string, orientation_landscape=True):
         "orientation": "landscape" if orientation_landscape else "portrait",
     }
     headers = {
-        "Authorization": "c9XsmKa4iyI9aue4FUsFzbrvTlYv7ob18otNEZms5FQfjzFA0WujEG3z",
+        "Authorization": PEXELS_API_KEY,
         "User-Agent": "TestScript/1.0",
     }
 
