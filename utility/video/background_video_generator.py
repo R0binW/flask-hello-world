@@ -5,18 +5,21 @@ from utility.utils import log_response,LOG_TYPE_PEXEL
 PEXELS_API_KEY = os.environ.get('PEXELS_KEY')
 
 def search_videos(query_string, orientation_landscape=True):
-    print("query string:", query_string)
     url = "https://api.pexels.com/videos/search"
-    headers = {
-        "Authorization": PEXELS_API_KEY
-    }
     params = {
         "query": query_string,
+        "per_page": 1,
         "orientation": "landscape" if orientation_landscape else "portrait",
-        "per_page": 15
+    }
+    headers = {
+        "Authorization": "c9XsmKa4iyI9aue4FUsFzbrvTlYv7ob18otNEZms5FQfjzFA0WujEG3z",
+        "User-Agent": "TestScript/1.0",
     }
 
     response = requests.get(url, headers=headers, params=params)
+    print("Status Code:", response.status_code)
+    print("Response Body:", response.text)
+
     json_data = response.json()
     log_response(LOG_TYPE_PEXEL,query_string,response.json())
    
