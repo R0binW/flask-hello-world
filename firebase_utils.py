@@ -4,10 +4,10 @@ from firebase_admin import firestore, storage
 
 # cred = credentials.Certificate("project-50e83-firebase-adminsdk-9o6z6-c86699ca6f.json")
 # firebase_admin.initialize_app(cred, {'storageBucket': 'project-50e83.appspot.com'})
-# db = firestore.client()
 
 cred = credentials.Certificate("/etc/secrets/firebase")
 firebase_admin.initialize_app(cred, {'storageBucket': 'project-50e83.appspot.com'})
+db = firestore.client()
 
 def delete(collection_id, document_id):
   doc = db.collection(collection_id).document(document_id)
