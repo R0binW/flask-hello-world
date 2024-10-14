@@ -50,7 +50,7 @@ def generate_memory(prompt):
       "videoURL": video_url,
     }
 
-    firebase_utils.set("memories", doc_id)
+    firebase_utils.set("memories", doc_id, document_data)
     return jsonify(document_data)
   except Exception:
     return jsonify(traceback.format_exc())
