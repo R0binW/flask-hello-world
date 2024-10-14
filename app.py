@@ -3,6 +3,7 @@ import openai
 import os
 import sys
 from datetime import datetime, timezone, timedelta
+import traceback
 
 import requests
 import firebase_utils
@@ -33,23 +34,26 @@ except KeyError:
   
 @app.route('/generate_memory/<prompt>')
 def generate_memory(prompt):
-  # Taking the current time and using it as the docname
-  pst_timezone = timezone(timedelta(hours=-8))
-  doc_id = datetime.now(pst_timezone).strftime("%m-%d-%Y, %H:%M:%S")
+  try:
+    # Taking the current time and using it as the docname
+    pst_timezone = timezone(timedelta(hours=-8))
+    doc_id = datetime.now(pst_timezone).strftime("%m-%d-%Y, %H:%M:%S")
 
-  better_prompt = generate_better_prompt(prompt)
-  generate_local_image(prompt)
-  uploaded_image_url = firebase_utils.upload_to_storage(doc_id, LOCAL_IMAGE)
-  video_url = try_get_video(prompt)
-  document_data = {
-    "originalPrompt": prompt,
-    "gptPrompt": better_prompt,
-    "imageURL": uploaded_image_url,
-    "videoURL": video_url,
-  }
+    better_prompt = generate_better_prompt(prompt)
+    generate_local_image(prompt)
+    uploaded_image_url = firebase_utils.upload_to_storage(doc_id, LOCAL_IMAGE)
+    video_url = try_get_video(prompt)
+    document_data = {
+      "originalPrompt": prompt,
+      "gptPrompt": better_prompt,
+      "imageURL": uploaded_image_url,
+      "videoURL": video_url,
+    }
 
-  firebase_utils.set("memories", doc_id)
-  return jsonify(document_data)
+    firebase_utils.set("memories", doc_id)
+    return jsonify(document_data)
+  except Exception:
+    return jsonify(traceback.format_exc())
 
 def generate_better_prompt(prompt):
   system_prompt = '''
